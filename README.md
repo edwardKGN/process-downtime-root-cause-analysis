@@ -1,9 +1,9 @@
 # Process Downtime Root Cause Analysis
 
 ## Overview
-This project models an process downtime
+This project builds a machine learning system to identify key drivers of production downtime using synthetic industrial data.
 
-Using XGBoost
+By analyzing operational parameters such as temperature, machine type, batch number, the system provides actionable insights to reduce downtime and improve operational efficiency.
 
 Variations in production times creates chaos in production planning and has led to missing production throughput targets.
 
@@ -15,9 +15,11 @@ By optimizing the process which shows significant spread, companies can:
 ## Features
 - The problem is formulated as a feature importance problem.
 
-XGBoost is use to iteratively regress features that lead to downtime spread by:
-- Randomly Generating Forest Trees
-- Calculate the Feature Importance from Gain
+XGBoost, a Tree-based model was selected because:
+- They handle non-linear relationships effectively
+- They capture feature interactions without manual engineering
+- They provide interpretable feature importance
+
 
 ## Tech Stack
 - Python
@@ -29,6 +31,10 @@ XGBoost is use to iteratively regress features that lead to downtime spread by:
 - process_step_downtime.csv
 
 Synthetic sample data is provided in the /data folder.
+
+This dataset is synthetically generated to simulate realistic industrial conditions:
+- Process running in batches which requires feeding of raw materials and heating
+- Each process step delay cascades onto the following batches 
 
 ## How to Run
 - Run 00_Process Step Downtime Spread Analysis.ipynb
@@ -48,19 +54,26 @@ Here is the result of the analysis
 - Based on Histogram data from Downtime spread, it was found that there was insufficient samples to get a statistically signficant distribution
 - Based on Correlation Matrix, current features used were found to have minimal correlation with Downtime. This may indicate that there may be other factors affecting the downtime.
 
-Due to limitations from the downtime distribution and correlation matrix, the following ranking and SHAP plot (plotted for completion sake) can be ignored.
-
 ![FeatureRank](screenshots/feature_importance_ranking.png)
 
 ![Shapley](screenshots/shap_plot.png)
 
-## Next Actions
-- Increase Number of Samples to improve Extropolation Capability
-- Seek for more features to map against
+SHAP analysis was performed to interpret feature contributions to downtime predictions.
+
+However, due to limited dataset size and weak signal strength, the model exhibits instability in feature attribution.
+
+As a result:
+- SHAP values may not reliably represent true feature importance
+- Observed patterns should be treated as preliminary indicators rather than definitive conclusions
 
 ## Future Improvements
-- Gather more sample data of the process
-- Expand search for more features that may affect the downtime spread
+1. Increase data collection for underrepresented failure cases
+2. Introduce additional features such as:
+   - Time since last maintenance
+   - Machine-specific degradation indicators
+   - Environmental conditions (humidity, external temperature)
+3. Perform iterative analysis with updated datasets
+4. Incorporate domain-specific feature engineering
 
 ## Lessons Learned
 - Application of XGBoost and Feature Importance
