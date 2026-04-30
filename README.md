@@ -53,6 +53,7 @@ Here is the result of the analysis
 
 - Based on Histogram data from Downtime spread, it was found that there was insufficient samples to get a statistically signficant distribution
 - Based on Correlation Matrix, current features used were found to have minimal correlation with Downtime. This may indicate that there may be other factors affecting the downtime.
+- Preliminary trends suggest that running batch count and differing machines may influence downtime probability, but additional data is required to confirm these relationships.
 
 ![FeatureRank](screenshots/feature_importance_ranking.png)
 
